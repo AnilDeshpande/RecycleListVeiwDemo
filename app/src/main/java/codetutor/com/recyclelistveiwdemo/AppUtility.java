@@ -32,6 +32,7 @@ public class AppUtility {
             Person person=new Person(names[i],lastnames[i],
                                      genders[i].equalsIgnoreCase("male")? Person.GENDER.MALE: Person.GENDER.FEMALE,
                                      nationalities[i]);
+            people.add(person);
         }
 
     }

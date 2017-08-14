@@ -1,5 +1,6 @@
 package codetutor.com.recyclelistveiwdemo;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Adapter;
@@ -14,16 +15,17 @@ public class MainActivity extends AppCompatActivity {
     AppUtility appUtility;
 
     ArrayAdapter<String> namesAdapter;
+    ListAdapterPeople listAdapterPeople;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        appUtility=AppUtility.getAppUtility(getApplicationContext());
-
         listView=(ListView)findViewById(R.id.listView);
-        namesAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,appUtility.getNationalities());
-        listView.setAdapter(namesAdapter);
+
+        appUtility=AppUtility.getAppUtility(getApplicationContext());
+        listAdapterPeople=new ListAdapterPeople(this,appUtility.getPeople());
+        listView.setAdapter(listAdapterPeople);
 
 
     }
