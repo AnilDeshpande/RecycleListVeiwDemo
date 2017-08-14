@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">RecycleListVeiwDemo</string>
+
+    <string-array name="names">
+        <item>Anil</item>
+        <item>Ajay</item>
+        <item>Amit</item>
+        <item>Ashwini</item>
+        <item>George</item>
+        <item>Anna</item>
+        <item>Pooja</item>
+        <item>Amir</item>
+    </string-array>
+
+    <string-array name="lastnames">
+        <item>Deshpande</item>
+        <item>Kolhar</item>
+        <item>Trivedi</item>
+        <item>Mudaliar</item>
+        <item>Patton</item>
+        <item>Atkins</item>
+        <item>Batra</item>
+        <item>Khan</item>
+    </string-array>
+
+    <string-array name="gender">
+        <item>male</item>
+        <item>male</item>
+        <item>male</item>
+        <item>female</item>
+        <item>male</item>
+        <item>female</item>
+        <item>female</item>
+        <item>male</item>
+    </string-array>
+
+    <string-array name="nationality">
+        <item>Indian</item>
+        <item>Indian</item>
+        <item>Indian</item>
+        <item>Indian</item>
+        <item>British</item>
+        <item>British</item>
+        <item>Indian</item>
+        <item>Indian</item>
+    </string-array>
+
+</resources>
