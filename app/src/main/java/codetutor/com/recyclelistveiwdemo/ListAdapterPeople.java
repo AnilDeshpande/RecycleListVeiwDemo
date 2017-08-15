@@ -1,6 +1,7 @@
 package codetutor.com.recyclelistveiwdemo;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import java.util.List;
  */
 
 public class ListAdapterPeople extends BaseAdapter {
+
+    private static final String TAG = ListAdapterPeople.class.getSimpleName();
 
     List<Person> people;
     Context context;
@@ -42,38 +45,18 @@ public class ListAdapterPeople extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        PersonViewHolder personViewHolder;
 
-        if(view==null){
-            layoutInflater = LayoutInflater.from(this.context);
-
-            view=layoutInflater.inflate(R.layout.layout_person_row_item,null);
-            personViewHolder=new PersonViewHolder();
-
-            personViewHolder.textViewName = (TextView)view.findViewById(R.id.textViewName);
-            personViewHolder.textViewLastName=(TextView)view.findViewById(R.id.textViewLastName);
-            personViewHolder.textViewGender = (TextView)view.findViewById(R.id.textViewGender);
-            personViewHolder.textViewNationality = (TextView)view.findViewById(R.id.textViewNationality);
-
-            view.setTag(personViewHolder);
-        }else{
-            personViewHolder = (PersonViewHolder)view.getTag();
-        }
+        layoutInflater = LayoutInflater.from(this.context);
 
         final Person person = people.get(i);
 
-        personViewHolder.textViewName.setText(person.getName());
-        personViewHolder.textViewLastName.setText(person.getLastName());
-        personViewHolder.textViewNationality.setText(person.getNationality());
-        personViewHolder.textViewGender.setText(person.getGender()== Person.GENDER.MALE? "Male":"Female");
+        view=layoutInflater.inflate(R.layout.layout_person_row_item,null);
+        ((TextView)view.findViewById(R.id.textViewName)).setText(person.getName());
+        ((TextView)view.findViewById(R.id.textViewLastName)).setText(person.getLastName());
+        ((TextView)view.findViewById(R.id.textViewGender)).setText((person.getGender()== Person.GENDER.MALE? "Male":"Female"));
+        ((TextView)view.findViewById(R.id.textViewNationality)).setText(person.getNationality());
 
+        Log.i(TAG,"Index: "+i+" : "+view);
         return view;
-    }
-
-    private static class PersonViewHolder{
-        public TextView textViewName;
-        public TextView textViewLastName;
-        public TextView textViewGender;
-        public TextView textViewNationality;
     }
 }
