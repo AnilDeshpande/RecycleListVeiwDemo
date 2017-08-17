@@ -11,7 +11,7 @@ import java.util.List;
 
 public class AppUtility {
     private String [] names;
-    private String[] lastnames;
+    private String [] lastnames;
     private String [] genders;
     private String [] nationalities;
 
