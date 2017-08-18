@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         appUtility=AppUtility.getAppUtility(getApplicationContext());
 
         listView=(ListView)findViewById(R.id.listView);
-        namesAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,appUtility.getNationalities());
+        namesAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,appUtility.getNames());
         listView.setAdapter(namesAdapter);
 
 

@@ -10,6 +10,12 @@
         <item>Anna</item>
         <item>Pooja</item>
         <item>Amir</item>
+        <item>Ajit</item>
+        <item>William</item>
+        <item>Jane</item>
+        <item>John</item>
+        <item>Anikita</item>
+        <item>Rahul</item>
     </string-array>
 
     <string-array name="lastnames">
@@ -21,6 +27,13 @@
         <item>Atkins</item>
         <item>Batra</item>
         <item>Khan</item>
+        <item>Nair</item>
+        <item>Beck</item>
+        <item>Dakota</item>
+        <item>Ferrel</item>
+        <item>Nahar</item>
+        <item>Dev</item>
+
     </string-array>
 
     <string-array name="gender">
@@ -32,6 +45,12 @@
         <item>female</item>
         <item>female</item>
         <item>male</item>
+        <item>male</item>
+        <item>male</item>
+        <item>female</item>
+        <item>male</item>
+        <item>female</item>
+        <item>male</item>
     </string-array>
 
     <string-array name="nationality">
@@ -41,6 +60,12 @@
         <item>Indian</item>
         <item>British</item>
         <item>British</item>
+        <item>Indian</item>
+        <item>Indian</item>
+        <item>Indian</item>
+        <item>USA</item>
+        <item>Australian</item>
+        <item>USA</item>
         <item>Indian</item>
         <item>Indian</item>
     </string-array>
