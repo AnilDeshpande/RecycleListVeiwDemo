@@ -1,32 +1,31 @@
 package codetutor.com.recyclelistveiwdemo;
 
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Adapter;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ListView listView;
+    private RecyclerView recyclerView;
     AppUtility appUtility;
 
-    ArrayAdapter<String> namesAdapter;
-    ListAdapterPeople listAdapterPeople;
+    ListAdapterWithRecycleView listAdapterWithRecycleView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        listView=(ListView)findViewById(R.id.listView);
+        recyclerView =(RecyclerView) findViewById(R.id.recycleListView);
 
         appUtility=AppUtility.getAppUtility(getApplicationContext());
-        listAdapterPeople=new ListAdapterPeople(this,appUtility.getPeople());
-        listView.setAdapter(listAdapterPeople);
 
+        listAdapterWithRecycleView=new ListAdapterWithRecycleView(this,appUtility.getPeople());
 
+        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(listAdapterWithRecycleView);
     }
 }
