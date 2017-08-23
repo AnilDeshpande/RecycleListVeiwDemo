@@ -26,7 +26,5 @@ public class MainActivity extends AppCompatActivity {
         appUtility=AppUtility.getAppUtility(getApplicationContext());
         listAdapterPeople=new ListAdapterPeople(this,appUtility.getPeople());
         listView.setAdapter(listAdapterPeople);
-
-
     }
 }
