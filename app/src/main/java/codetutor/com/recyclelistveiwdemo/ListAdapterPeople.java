@@ -1,6 +1,7 @@
 package codetutor.com.recyclelistveiwdemo;
 
 import android.content.Context;
+import android.util.ArraySet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by anildeshpande on 8/14/17.
@@ -21,10 +23,12 @@ public class ListAdapterPeople extends BaseAdapter {
     List<Person> people;
     Context context;
     LayoutInflater layoutInflater;
+    Set<View> views;
 
     public ListAdapterPeople(Context context,List<Person> people){
         this.context=context;
         this.people=people;
+        this.views= new android.support.v4.util.ArraySet<View>();
     }
 
 
@@ -70,7 +74,9 @@ public class ListAdapterPeople extends BaseAdapter {
         personViewHolder.textViewNationality.setText(person.getNationality());
         personViewHolder.textViewGender.setText((person.getGender()== Person.GENDER.MALE? "Male":"Female"));
 
-        Log.i(TAG,"Index: "+i+" : "+view);
+        views.add(view);
+
+        Log.i(TAG,"Index: "+i+" : "+view+", Set Size: "+views.size());
 
         return view;
     }
