@@ -7,10 +7,13 @@
     tools:context="codetutor.com.recyclelistveiwdemo.MainActivity">
 
     <ListView
-        android:layout_width="368dp"
-        android:layout_height="495dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/listView"
         tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp"></ListView>
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"></ListView>
 
 </android.support.constraint.ConstraintLayout>
