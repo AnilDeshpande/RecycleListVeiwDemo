@@ -23,12 +23,13 @@ public class ListAdapterPeople extends BaseAdapter {
     List<Person> people;
     Context context;
     LayoutInflater layoutInflater;
-    Set<View> views;
+
+    Set<View> viewSet;
 
     public ListAdapterPeople(Context context,List<Person> people){
         this.context=context;
         this.people=people;
-        this.views = new ArraySet<View>();
+        viewSet = new ArraySet<View>();
     }
 
 
@@ -49,20 +50,23 @@ public class ListAdapterPeople extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+        if(view==null){
+            layoutInflater = LayoutInflater.from(this.context);
+            view=layoutInflater.inflate(R.layout.layout_person_row_item,null);
+        }
 
-        layoutInflater = LayoutInflater.from(this.context);
 
         final Person person = people.get(i);
 
-        view=layoutInflater.inflate(R.layout.layout_person_row_item,null);
+
         ((TextView)view.findViewById(R.id.textViewName)).setText(person.getName());
         ((TextView)view.findViewById(R.id.textViewLastName)).setText(person.getLastName());
         ((TextView)view.findViewById(R.id.textViewGender)).setText((person.getGender()== Person.GENDER.MALE? "Male":"Female"));
         ((TextView)view.findViewById(R.id.textViewNationality)).setText(person.getNationality());
 
-        views.add(view);
+        viewSet.add(view);
 
-        Log.i(TAG,"Index: "+i+" : "+view+", Size: "+views.size());
+        Log.i(TAG,"Index: "+i+" : "+view+" Size "+viewSet.size());
         return view;
     }
 }
