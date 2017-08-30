@@ -56,6 +56,7 @@ public class ListAdapterPeople extends BaseAdapter {
         }
 
 
+
         final Person person = people.get(i);
 
 
@@ -69,4 +70,6 @@ public class ListAdapterPeople extends BaseAdapter {
         Log.i(TAG,"Index: "+i+" : "+view+" Size "+viewSet.size());
         return view;
     }
+
+
 }
