@@ -2,7 +2,6 @@ package codetutor.com.recyclelistveiwdemo;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -23,9 +22,8 @@ public class MainActivity extends AppCompatActivity {
 
         listAdapterWithRecycleView=new ListAdapterWithRecycleView(this,appUtility.getPeople());
 
-        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(listAdapterWithRecycleView);
     }
 }

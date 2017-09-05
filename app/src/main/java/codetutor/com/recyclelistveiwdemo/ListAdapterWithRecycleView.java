@@ -2,7 +2,6 @@ package codetutor.com.recyclelistveiwdemo;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,20 +26,21 @@ public class ListAdapterWithRecycleView extends RecyclerView.Adapter<ListAdapter
     }
 
     @Override
-    public PersonViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PersonViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(context).inflate(R.layout.layout_person_row_item,parent,false);
-        Log.i(TAG,""+view);
         return new PersonViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(PersonViewHolder holder, int position) {
+    public void onBindViewHolder(final PersonViewHolder holder, int position) {
         final Person person=personList.get(position);
 
         holder.textViewName.setText(person.getName());
         holder.textViewLastName.setText(person.getLastName());
         holder.textViewNationality.setText(person.getNationality());
         holder.textViewGender.setText(person.getGender()== Person.GENDER.MALE?"Male":"Female");
+        holder.textViewNationality.setEnabled(true);
+
     }
 
     @Override
