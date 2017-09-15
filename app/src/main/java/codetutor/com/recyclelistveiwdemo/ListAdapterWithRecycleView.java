@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -28,7 +29,19 @@ public class ListAdapterWithRecycleView extends RecyclerView.Adapter<ListAdapter
     @Override
     public PersonViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(context).inflate(R.layout.layout_person_row_item,parent,false);
-        return new PersonViewHolder(view);
+        final PersonViewHolder personViewHolder=new PersonViewHolder(view);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position=personViewHolder.getAdapterPosition();
+                Toast.makeText(context,"Item at position "+position+" deleted",Toast.LENGTH_SHORT).show();
+                personList.remove(position);
+                notifyDataSetChanged();
+
+            }
+        });
+
+        return personViewHolder;
     }
 
     @Override

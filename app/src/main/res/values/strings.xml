@@ -70,4 +70,15 @@
         <item>Indian</item>
     </string-array>
 
+    <string name="nationality_prompt">Nationality</string>
+
+    <string-array name="nationalities">
+        <item>Indian</item>
+        <item>USA</item>
+        <item>Australian</item>
+        <item>British</item>
+        <item>Bangladesh</item>
+        <item>Sri Lanka</item>
+    </string-array>
+
 </resources>

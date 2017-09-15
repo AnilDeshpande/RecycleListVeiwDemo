@@ -15,6 +15,8 @@ public class AppUtility {
     private String [] genders;
     private String [] nationalities;
 
+    private static final String EMPTY_STRING = "";
+
     private Context context;
 
     private List<Person> people;
@@ -62,6 +64,18 @@ public class AppUtility {
 
     public String [] getNationalities(){
         return nationalities;
+    }
+
+    public static boolean isStringEmpty(String string){
+        boolean isStringEmpty=false;
+        if (string==null){
+            isStringEmpty=true;
+        }else{
+            if(string.length()==0 || string.equals(EMPTY_STRING)){
+                isStringEmpty=true;
+            }
+        }
+        return isStringEmpty;
     }
 
 }
