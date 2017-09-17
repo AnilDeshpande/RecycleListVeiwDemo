@@ -78,4 +78,17 @@ public class AppUtility {
         return isStringEmpty;
     }
 
+    public int getNationalityForSelectedIndex(String nationality){
+        int nationalityIndex=0;
+        String [] nationalities = appUtility.getNationalities();
+        do{
+            if(nationalities[nationalityIndex].equals(nationality)){
+                break;
+            }
+            nationalityIndex++;
+        }while (nationalityIndex<nationalities.length);
+
+        return nationalityIndex;
+    }
+
 }

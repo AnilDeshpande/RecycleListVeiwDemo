@@ -11,13 +11,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ListAdapterWithRecycleView.PersonModifier{
 
     private RecyclerView recyclerView;
     AppUtility appUtility;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonAdd;
 
     List<Person> people;
+    int modificationIndex=-1;
 
     String firstName, lastName, nationality;
     Person.GENDER gender;
@@ -50,15 +52,16 @@ public class MainActivity extends AppCompatActivity {
         people = appUtility.getPeople();
 
         listAdapterWithRecycleView=new ListAdapterWithRecycleView(this,people);
+        listAdapterWithRecycleView.setPersonModifier(this);
 
         linearLayoutManager=new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         gridLayoutManager = new GridLayoutManager(this,2,GridLayoutManager.VERTICAL,false);
-        /*gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
                 return (position%3==0?2:1);
             }
-        });*/
+        });
 
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.HORIZONTAL);
 
@@ -74,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         radioGroup = (RadioGroup)findViewById(R.id.radioGroupGender);
         spinnerNationality = (Spinner)findViewById(R.id.spinnerNationality);
         buttonAdd = (Button)findViewById(R.id.buttonAdd);
+        buttonAdd.setTag("Add");
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -101,16 +105,46 @@ public class MainActivity extends AppCompatActivity {
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            firstName = editTextFirstName.getText().toString();
-            lastName  = editTextLastName.getText().toString();
-            if(isInputDataValid()){
-                Person person=new Person(firstName,lastName,gender,nationality);
-                people.add(person);
-                listAdapterWithRecycleView.notifyDataSetChanged();
+                firstName = editTextFirstName.getText().toString();
+                lastName  = editTextLastName.getText().toString();
+                Person person=null;
 
-            }else {
-                Toast.makeText(MainActivity.this,"Input Invalid",Toast.LENGTH_LONG).show();
-            }
+                if(isInputDataValid()) {
+                    person = new Person(firstName, lastName, gender, nationality);
+                }else{
+                    Toast.makeText(MainActivity.this,"Input Invalid",Toast.LENGTH_LONG).show();
+                }
+
+                String behaviour = (String)buttonAdd.getTag();
+                if(behaviour.equalsIgnoreCase("Add")){
+                    if(person!=null){
+                        people.add(person);
+                        listAdapterWithRecycleView.notifyDataSetChanged();
+                        recyclerView.scrollToPosition(people.size()-1);
+                        clearInputForm();
+                    }
+                }else if(behaviour.equalsIgnoreCase("modify")){
+                    if(person!=null){
+                        try{
+                            people.get(modificationIndex).setName(person.getName());
+                            people.get(modificationIndex).setLastName(person.getLastName());
+                            people.get(modificationIndex).setGender(person.getGender());
+                            people.get(modificationIndex).setNationality(person.getNationality());
+
+                            listAdapterWithRecycleView.notifyItemChanged(modificationIndex);
+                            clearInputForm();
+                            buttonAdd.setTag("Add");
+                            buttonAdd.setText("Add");
+                        }catch (IndexOutOfBoundsException exception){
+                            Toast.makeText(MainActivity.this,"Can't modify, item moved",Toast.LENGTH_LONG ).show();
+                            listAdapterWithRecycleView.notifyDataSetChanged();
+                            clearInputForm();
+                            buttonAdd.setTag("Add");
+                            buttonAdd.setText("Add");
+                        }
+                    }
+                }
+
             }
         });
     }
@@ -123,5 +157,35 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void clearInputForm() {
+        editTextFirstName.setText("");
+        editTextLastName.setText("");
+        radioGroup.clearCheck();
+        spinnerNationality.setSelection(0);
+    }
+
+    @Override
+    public void onPersonSelected(int position) {
+        modificationIndex = position;
+        Person person=people.get(position);
+        buttonAdd.setTag("Modify");
+        buttonAdd.setText("Modify");
+
+        editTextFirstName.setText(person.getName());
+        editTextLastName.setText(person.getLastName());
+        if(person.getGender()== Person.GENDER.MALE){
+            ((RadioButton)findViewById(R.id.radioButtonMale)).performClick();
+        }else if(person.getGender()== Person.GENDER.FEMALE){
+            ((RadioButton)findViewById(R.id.radioButtonFemale)).performClick();
+        }
+        spinnerNationality.setSelection(appUtility.getNationalityForSelectedIndex(person.getNationality()));
+    }
+
+    @Override
+    public void onPersonDeleted(int position) {
+        buttonAdd.setTag("Add");
+        buttonAdd.setText("Add");
+        clearInputForm();
+    }
 
 }
