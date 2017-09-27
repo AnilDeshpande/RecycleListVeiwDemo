@@ -24,8 +24,6 @@ public class ListAdapterWithRecycleView extends RecyclerView.Adapter<ListAdapter
         public void onPersonDeleted(int position);
     }
 
-
-
     private List<Person> personList;
     private Context context;
 
@@ -47,35 +45,29 @@ public class ListAdapterWithRecycleView extends RecyclerView.Adapter<ListAdapter
         view.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                int position=personViewHolder.getAdapterPosition();
-                Toast.makeText(context,"Item at position "+position+" deleted",Toast.LENGTH_SHORT).show();
-                personList.remove(position);
-                notifyDataSetChanged();
-                if(personModifier!=null){
-                    personModifier.onPersonDeleted(position);
-                }
-                return true;
+            int position=personViewHolder.getAdapterPosition();
+            Toast.makeText(context,"Item at position "+position+" deleted",Toast.LENGTH_SHORT).show();
+            personList.remove(position);
+            notifyDataSetChanged();
+            if(personModifier!=null){personModifier.onPersonDeleted(position);}
+            return true;
             }
         });
-
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(personModifier!=null){
-                    personModifier.onPersonSelected(personViewHolder.getAdapterPosition());
-                }
+            if(personModifier!=null){
+                personModifier.onPersonSelected(personViewHolder.getAdapterPosition());
+            }
             }
         });
-
         Log.i(TAG,"onCreateViewHolder invoked");
-
         return personViewHolder;
     }
 
     @Override
     public void onBindViewHolder(final PersonViewHolder holder, int position) {
         final Person person=personList.get(position);
-
         holder.textViewName.setText(person.getName());
         holder.textViewLastName.setText(person.getLastName());
         holder.textViewNationality.setText(person.getNationality());
@@ -84,17 +76,16 @@ public class ListAdapterWithRecycleView extends RecyclerView.Adapter<ListAdapter
         holder.textViewGender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Person.GENDER  gender= personList.get(holder.getAdapterPosition()).getGender();
-                if(gender == Person.GENDER.MALE){
-                    personList.get(holder.getAdapterPosition()).setGender(Person.GENDER.FEMALE);
-                }else if(gender == Person.GENDER.FEMALE){
-                    personList.get(holder.getAdapterPosition()).setGender(Person.GENDER.MALE);
-                }
-                notifyItemChanged(holder.getAdapterPosition());
+            Person.GENDER  gender= personList.get(holder.getAdapterPosition()).getGender();
+            if(gender == Person.GENDER.MALE){
+                personList.get(holder.getAdapterPosition()).setGender(Person.GENDER.FEMALE);
+            }else if(gender == Person.GENDER.FEMALE){
+                personList.get(holder.getAdapterPosition()).setGender(Person.GENDER.MALE);
+            }
+            notifyItemChanged(holder.getAdapterPosition());
             }
         });
         Log.i(TAG,"onBindViewHolder invoked: "+position);
-
     }
 
     @Override

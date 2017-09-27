@@ -9,11 +9,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import java.util.List;
@@ -44,11 +46,10 @@ public class MainActivity extends AppCompatActivity implements ListAdapterWithRe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        appUtility=AppUtility.getAppUtility(getApplicationContext());
         initPersonInputForm();
-
         recyclerView =(RecyclerView) findViewById(R.id.recycleListView);
 
-        appUtility=AppUtility.getAppUtility(getApplicationContext());
         people = appUtility.getPeople();
 
         listAdapterWithRecycleView=new ListAdapterWithRecycleView(this,people);
@@ -56,18 +57,11 @@ public class MainActivity extends AppCompatActivity implements ListAdapterWithRe
 
         linearLayoutManager=new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         gridLayoutManager = new GridLayoutManager(this,2,GridLayoutManager.VERTICAL,false);
-        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                return (position%3==0?2:1);
-            }
-        });
 
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.HORIZONTAL);
 
-
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(listAdapterWithRecycleView);
     }
 
@@ -75,7 +69,9 @@ public class MainActivity extends AppCompatActivity implements ListAdapterWithRe
         editTextFirstName = (EditText)findViewById(R.id.editTextFirstName);
         editTextLastName = (EditText)findViewById(R.id.editTextLastName);
         radioGroup = (RadioGroup)findViewById(R.id.radioGroupGender);
+
         spinnerNationality = (Spinner)findViewById(R.id.spinnerNationality);
+        spinnerNationality.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,appUtility.getUniqueNationalitiesArray()));
         buttonAdd = (Button)findViewById(R.id.buttonAdd);
         buttonAdd.setTag("Add");
 

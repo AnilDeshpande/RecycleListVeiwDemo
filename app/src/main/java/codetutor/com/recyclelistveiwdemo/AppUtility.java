@@ -3,7 +3,9 @@ package codetutor.com.recyclelistveiwdemo;
 import android.content.Context;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by anildeshpande on 8/14/17.
@@ -14,6 +16,8 @@ public class AppUtility {
     private String[] lastnames;
     private String [] genders;
     private String [] nationalities;
+
+    private String [] uniqueNationalitiesArray;
 
     private static final String EMPTY_STRING = "";
 
@@ -36,6 +40,8 @@ public class AppUtility {
                                      nationalities[i]);
             people.add(person);
         }
+
+        setUniqueNationalities();
 
     }
 
@@ -78,9 +84,25 @@ public class AppUtility {
         return isStringEmpty;
     }
 
+    private void setUniqueNationalities(){
+        List<String> uniqueNationalities = new ArrayList<String>();
+        for(String nationality: getNationalities()){
+            if(!uniqueNationalities.contains(nationality)){
+                uniqueNationalities.add(nationality);
+            }
+        }
+        uniqueNationalitiesArray = uniqueNationalities.toArray(new String[uniqueNationalities.size()]);
+    }
+
+    public String[] getUniqueNationalitiesArray(){
+        return this.uniqueNationalitiesArray;
+    }
+
+
+
     public int getNationalityForSelectedIndex(String nationality){
         int nationalityIndex=0;
-        String [] nationalities = appUtility.getNationalities();
+        String [] nationalities = this.uniqueNationalitiesArray;
         do{
             if(nationalities[nationalityIndex].equals(nationality)){
                 break;
