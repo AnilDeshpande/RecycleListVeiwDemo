@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements ListAdapterWithRe
                             people.get(modificationIndex).setName(person.getName());
                             people.get(modificationIndex).setLastName(person.getLastName());
                             people.get(modificationIndex).setGender(person.getGender());
-                            people.get(modificationIndex).setNationality(person.getNationality());
+                            people.get(modificationIndex).setNationality((String)spinnerNationality.getSelectedItem());
 
                             listAdapterWithRecycleView.notifyItemChanged(modificationIndex);
                             clearInputForm();
