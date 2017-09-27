@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements ListAdapterWithRe
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.HORIZONTAL);
 
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(listAdapterWithRecycleView);
     }
 
