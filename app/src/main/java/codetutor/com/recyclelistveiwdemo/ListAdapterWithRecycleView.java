@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,7 +16,7 @@ import java.util.List;
  * Created by anildeshpande on 8/19/17.
  */
 
-public class ListAdapterWithRecycleView extends RecyclerView.Adapter<ListAdapterWithRecycleView.PersonViewHolder> {
+public class ListAdapterWithRecycleView extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final String TAG = ListAdapterWithRecycleView.class.getSimpleName();
 
@@ -39,52 +40,88 @@ public class ListAdapterWithRecycleView extends RecyclerView.Adapter<ListAdapter
     }
 
     @Override
-    public PersonViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(context).inflate(R.layout.layout_person_row_item,parent,false);
-        final PersonViewHolder personViewHolder=new PersonViewHolder(view);
-        view.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-            int position=personViewHolder.getAdapterPosition();
-            Toast.makeText(context,"Item at position "+position+" deleted",Toast.LENGTH_SHORT).show();
-            personList.remove(position);
-            notifyDataSetChanged();
-            if(personModifier!=null){personModifier.onPersonDeleted(position);}
-            return true;
-            }
-        });
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            if(personModifier!=null){
-                personModifier.onPersonSelected(personViewHolder.getAdapterPosition());
-            }
-            }
-        });
-        Log.i(TAG,"onCreateViewHolder invoked");
-        return personViewHolder;
+    public int getItemViewType(int position) {
+        if(position % 3==0){
+            return R.layout.layout_advertisement_row_item;
+        }else{
+            return R.layout.layout_person_row_item;
+        }
     }
 
     @Override
-    public void onBindViewHolder(final PersonViewHolder holder, int position) {
-        final Person person=personList.get(position);
-        holder.textViewName.setText(person.getName());
-        holder.textViewLastName.setText(person.getLastName());
-        holder.textViewNationality.setText(person.getNationality());
-        holder.textViewGender.setText(person.getGender()== Person.GENDER.MALE?"Male":"Female");
-        holder.textViewGender.setEnabled(true);
-        holder.textViewGender.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            Person.GENDER  gender= personList.get(holder.getAdapterPosition()).getGender();
-            if(gender == Person.GENDER.MALE){
-                personList.get(holder.getAdapterPosition()).setGender(Person.GENDER.FEMALE);
-            }else if(gender == Person.GENDER.FEMALE){
-                personList.get(holder.getAdapterPosition()).setGender(Person.GENDER.MALE);
-            }
-            notifyItemChanged(holder.getAdapterPosition());
-            }
-        });
+    public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
+        final RecyclerView.ViewHolder holder;
+        View view;
+        switch (viewType){
+            case R.layout.layout_advertisement_row_item:
+                view= LayoutInflater.from(context).inflate(R.layout.layout_advertisement_row_item,parent,false);
+                holder=new AdvertisementHolder(view);
+                break;
+
+            case R.layout.layout_person_row_item:
+                view= LayoutInflater.from(context).inflate(R.layout.layout_person_row_item,parent,false);
+                holder=new PersonViewHolder(view);
+                view.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        int position=holder.getAdapterPosition();
+                        Toast.makeText(context,"Item at position "+position+" deleted",Toast.LENGTH_SHORT).show();
+                        personList.remove(position);
+                        notifyDataSetChanged();
+                        if(personModifier!=null){personModifier.onPersonDeleted(position);}
+                        return true;
+                    }
+                });
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(personModifier!=null){
+                            personModifier.onPersonSelected(holder.getAdapterPosition());
+                        }
+                    }
+                });
+                break;
+            default:
+                view= LayoutInflater.from(context).inflate(R.layout.layout_advertisement_row_item,parent,false);
+                holder=new AdvertisementHolder(view);
+                break;
+
+        }
+
+        return holder;
+
+    }
+
+    @Override
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+        if(holder instanceof PersonViewHolder){
+            final Person person=personList.get(position);
+            ((PersonViewHolder)holder).textViewName.setText(person.getName());
+            ((PersonViewHolder)holder).textViewLastName.setText(person.getLastName());
+            ((PersonViewHolder)holder).textViewNationality.setText(person.getNationality());
+            ((PersonViewHolder)holder).textViewGender.setText(person.getGender()== Person.GENDER.MALE?"Male":"Female");
+            ((PersonViewHolder)holder).textViewGender.setEnabled(true);
+            ((PersonViewHolder)holder).textViewGender.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Person.GENDER  gender= personList.get(holder.getAdapterPosition()).getGender();
+                    if(gender == Person.GENDER.MALE){
+                        personList.get(holder.getAdapterPosition()).setGender(Person.GENDER.FEMALE);
+                    }else if(gender == Person.GENDER.FEMALE){
+                        personList.get(holder.getAdapterPosition()).setGender(Person.GENDER.MALE);
+                    }
+                    notifyItemChanged(holder.getAdapterPosition());
+                }
+            });
+        }else if(holder instanceof AdvertisementHolder){
+            ((AdvertisementHolder)holder).textViewAdvertMessage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                   Toast.makeText(context,"Advertisement not availble",Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+
         Log.i(TAG,"onBindViewHolder invoked: "+position);
     }
 
@@ -105,6 +142,17 @@ public class ListAdapterWithRecycleView extends RecyclerView.Adapter<ListAdapter
             textViewLastName=(TextView)view.findViewById(R.id.textViewLastName);
             textViewGender = (TextView)view.findViewById(R.id.textViewGender);
             textViewNationality = (TextView)view.findViewById(R.id.textViewNationality);
+        }
+    }
+
+    class AdvertisementHolder extends RecyclerView.ViewHolder{
+        public ImageView imageViewAdvertisementBanner;
+        public TextView textViewAdvertMessage;
+
+        public AdvertisementHolder(View view){
+            super(view);
+            imageViewAdvertisementBanner = (ImageView)view.findViewById(R.id.imageViewAdvertisementBanner);
+            textViewAdvertMessage = (TextView)view.findViewById(R.id.textViewAdvertMessage);
         }
     }
 }

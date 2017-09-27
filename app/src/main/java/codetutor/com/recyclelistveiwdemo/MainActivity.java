@@ -58,11 +58,13 @@ public class MainActivity extends AppCompatActivity implements ListAdapterWithRe
         linearLayoutManager=new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         gridLayoutManager = new GridLayoutManager(this,2,GridLayoutManager.VERTICAL,false);
 
-        staggeredGridLayoutManager = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.HORIZONTAL);
+        staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
 
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(gridLayoutManager);
+
+        recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(listAdapterWithRecycleView);
+
     }
 
     private void initPersonInputForm(){

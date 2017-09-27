@@ -4,7 +4,7 @@ package codetutor.com.recyclelistveiwdemo;
  * Created by anildeshpande on 8/14/17.
  */
 
-public class Person {
+public class Person{
 
     private String name;
     private String lastName;

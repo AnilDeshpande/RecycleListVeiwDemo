@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/advertisementHolder"
+        android:layout_gravity="center"
+        android:background="@android:color/holo_red_light">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_gravity="center"
+            android:background="@android:color/holo_red_light"
+            android:id="@+id/imageViewAdvertisementBanner"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:gravity="center"
+            android:id="@+id/textViewAdvertMessage"
+            android:text="@string/advertisement_space"
+            android:textSize="25sp"
+            android:textColor="@color/white"
+            />
+    </FrameLayout>
+
+
+</LinearLayout>
