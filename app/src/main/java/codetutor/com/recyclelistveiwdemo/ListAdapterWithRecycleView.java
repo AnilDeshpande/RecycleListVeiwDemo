@@ -117,7 +117,7 @@ public class ListAdapterWithRecycleView extends RecyclerView.Adapter<RecyclerVie
             ((AdvertisementHolder)holder).textViewAdvertMessage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                   Toast.makeText(context,"Advertisement not availble",Toast.LENGTH_LONG).show();
+                   Toast.makeText(context,"Advertisement not available",Toast.LENGTH_LONG).show();
                 }
             });
         }
