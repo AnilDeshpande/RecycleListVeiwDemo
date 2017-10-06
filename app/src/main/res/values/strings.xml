@@ -82,4 +82,11 @@
         <item>Sri Lanka</item>
     </string-array>
 
+    <string-array name="advertisementMessages">
+        <item>Visit Incredible India!!</item>
+        <item>Learn Android</item>
+        <item>Subscribe to Codetutor</item>
+        <item>Learn Swift</item>
+    </string-array>
+
 </resources>

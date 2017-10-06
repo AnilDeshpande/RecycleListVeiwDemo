@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements ListAdapterWithRe
     private Button buttonAdd;
 
     List<Person> people;
+    List<Object> catalogue;
     int modificationIndex=-1;
 
     String firstName, lastName, nationality;
@@ -51,8 +52,9 @@ public class MainActivity extends AppCompatActivity implements ListAdapterWithRe
         recyclerView =(RecyclerView) findViewById(R.id.recycleListView);
 
         people = appUtility.getPeople();
+        catalogue=appUtility.getCatalogue();
 
-        listAdapterWithRecycleView=new ListAdapterWithRecycleView(this,people);
+        listAdapterWithRecycleView=new ListAdapterWithRecycleView(this,catalogue);
         listAdapterWithRecycleView.setPersonModifier(this);
 
         linearLayoutManager=new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);

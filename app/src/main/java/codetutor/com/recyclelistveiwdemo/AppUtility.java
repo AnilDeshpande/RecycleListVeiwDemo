@@ -3,8 +3,10 @@ package codetutor.com.recyclelistveiwdemo;
 import android.content.Context;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 /**
@@ -16,6 +18,10 @@ public class AppUtility {
     private String[] lastnames;
     private String [] genders;
     private String [] nationalities;
+    private List<Advertisement> ads;
+    private List<Object> catalogue;
+
+    private String [] advertisementMessages;
 
     private String [] uniqueNationalitiesArray;
 
@@ -33,6 +39,7 @@ public class AppUtility {
         lastnames = context.getResources().getStringArray(R.array.lastnames);
         genders = context.getResources().getStringArray(R.array.gender);
         nationalities=context.getResources().getStringArray(R.array.nationality);
+        advertisementMessages=context.getResources().getStringArray(R.array.advertisementMessages);
         people=new ArrayList<Person>();
         for(int i=0;i<names.length;i++){
             Person person=new Person(names[i],lastnames[i],
@@ -40,9 +47,14 @@ public class AppUtility {
                                      nationalities[i]);
             people.add(person);
         }
-
+        ads=new ArrayList<Advertisement>();
+        for(String adMessage: advertisementMessages){
+            Advertisement advertisement=new Advertisement();
+            advertisement.setAdMessage(adMessage);
+            ads.add(advertisement);
+        }
         setUniqueNationalities();
-
+        createCatalogue();
     }
 
     public static AppUtility getAppUtility(Context context){
@@ -111,6 +123,22 @@ public class AppUtility {
         }while (nationalityIndex<nationalities.length);
 
         return nationalityIndex;
+    }
+
+    public List<Advertisement> getAds(){
+        return this.ads;
+    }
+
+    public List<Object> createCatalogue(){
+        catalogue = new ArrayList<>();
+        catalogue.addAll(people);
+        catalogue.addAll(ads);
+        Collections.shuffle(catalogue);
+        return catalogue;
+    }
+
+    public List<Object> getCatalogue(){
+        return this.catalogue;
     }
 
 }

@@ -25,13 +25,13 @@ public class ListAdapterWithRecycleView extends RecyclerView.Adapter<RecyclerVie
         public void onPersonDeleted(int position);
     }
 
-    private List<Person> personList;
+    private List<Object> catalogue;
     private Context context;
 
     private PersonModifier personModifier;
 
-    public ListAdapterWithRecycleView(Context context,List<Person> people){
-        this.personList = people;
+    public ListAdapterWithRecycleView(Context context,List<Object> catalogue){
+        this.catalogue = catalogue;
         this.context=context;
     }
 
@@ -41,10 +41,12 @@ public class ListAdapterWithRecycleView extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public int getItemViewType(int position) {
-        if(position % 3==0){
+        if(catalogue.get(position) instanceof Advertisement){
             return R.layout.layout_advertisement_row_item;
-        }else{
+        } else if (catalogue.get(position) instanceof Person) {
             return R.layout.layout_person_row_item;
+        }else{
+            return -1;
         }
     }
 
@@ -66,7 +68,7 @@ public class ListAdapterWithRecycleView extends RecyclerView.Adapter<RecyclerVie
                     public boolean onLongClick(View view) {
                         int position=holder.getAdapterPosition();
                         Toast.makeText(context,"Item at position "+position+" deleted",Toast.LENGTH_SHORT).show();
-                        personList.remove(position);
+                        catalogue.remove(position);
                         notifyDataSetChanged();
                         if(personModifier!=null){personModifier.onPersonDeleted(position);}
                         return true;
@@ -95,7 +97,7 @@ public class ListAdapterWithRecycleView extends RecyclerView.Adapter<RecyclerVie
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if(holder instanceof PersonViewHolder){
-            final Person person=personList.get(position);
+            final Person person= (Person) catalogue.get(position);
             ((PersonViewHolder)holder).textViewName.setText(person.getName());
             ((PersonViewHolder)holder).textViewLastName.setText(person.getLastName());
             ((PersonViewHolder)holder).textViewNationality.setText(person.getNationality());
@@ -104,16 +106,17 @@ public class ListAdapterWithRecycleView extends RecyclerView.Adapter<RecyclerVie
             ((PersonViewHolder)holder).textViewGender.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Person.GENDER  gender= personList.get(holder.getAdapterPosition()).getGender();
+                    Person.GENDER  gender= ((Person)catalogue.get(holder.getAdapterPosition())).getGender();
                     if(gender == Person.GENDER.MALE){
-                        personList.get(holder.getAdapterPosition()).setGender(Person.GENDER.FEMALE);
+                        ((Person)catalogue.get(holder.getAdapterPosition())).setGender(Person.GENDER.FEMALE);
                     }else if(gender == Person.GENDER.FEMALE){
-                        personList.get(holder.getAdapterPosition()).setGender(Person.GENDER.MALE);
+                        ((Person)catalogue.get(holder.getAdapterPosition())).setGender(Person.GENDER.MALE);
                     }
                     notifyItemChanged(holder.getAdapterPosition());
                 }
             });
         }else if(holder instanceof AdvertisementHolder){
+            ((AdvertisementHolder)holder).textViewAdvertMessage.setText(((Advertisement)catalogue.get(position)).getAdMessage());
             ((AdvertisementHolder)holder).textViewAdvertMessage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -127,7 +130,7 @@ public class ListAdapterWithRecycleView extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public int getItemCount() {
-        return personList.size();
+        return catalogue.size();
     }
 
     class PersonViewHolder extends RecyclerView.ViewHolder{
