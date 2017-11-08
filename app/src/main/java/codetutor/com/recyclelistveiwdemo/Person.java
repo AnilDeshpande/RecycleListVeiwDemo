@@ -11,6 +11,8 @@ public class Person {
     private GENDER gender;
     private String nationality;
 
+    private boolean isDraggable;
+
     public Person(){
         super();
     }
@@ -55,4 +57,17 @@ public class Person {
     }
 
     enum GENDER{MALE, FEMALE};
+
+    public void setDraggable(boolean draggable) {
+        isDraggable = draggable;
+    }
+
+    public boolean isDraggable() {
+        return isDraggable;
+    }
+
+    @Override
+    public String toString() {
+        return this.name +" "+this.lastName+" "+this.lastName+ ", "+this.isDraggable();
+    }
 }

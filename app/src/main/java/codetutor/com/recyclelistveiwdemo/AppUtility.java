@@ -48,6 +48,15 @@ public class AppUtility {
         return this.people;
     }
 
+    public List<Person> getDraggablePeople(){
+        for(int i=0;i< this.people.size();i++){
+            if(i>3){
+                this.people.get(i).setDraggable(true);
+            }
+        }
+        return this.people;
+    }
+
     public String[] getNames() {
         return names;
     }
