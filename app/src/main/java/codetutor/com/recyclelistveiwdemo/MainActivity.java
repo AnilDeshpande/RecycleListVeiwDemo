@@ -20,17 +20,24 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.BindViews;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity implements ListAdapterWithRecycleView.PersonModifier{
 
-    private RecyclerView recyclerView;
+
+     @BindView(R.id.recycleListView) RecyclerView recyclerView;
     AppUtility appUtility;
 
     ListAdapterWithRecycleView listAdapterWithRecycleView;
 
-    private EditText editTextFirstName, editTextLastName;
-    private Spinner spinnerNationality;
-    private RadioGroup radioGroup;
-    private Button buttonAdd;
+
+     @BindView(R.id.editTextFirstName) EditText editTextFirstName;
+     @BindView(R.id.editTextLastName) EditText editTextLastName;
+     @BindView(R.id.spinnerNationality) Spinner spinnerNationality;
+     @BindView(R.id.radioGroupGender) RadioGroup radioGroup;
+     @BindView(R.id.buttonAdd) Button buttonAdd;
 
     List<Person> people;
     List<Object> catalogue;
@@ -47,9 +54,11 @@ public class MainActivity extends AppCompatActivity implements ListAdapterWithRe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+
         appUtility=AppUtility.getAppUtility(getApplicationContext());
+
         initPersonInputForm();
-        recyclerView =(RecyclerView) findViewById(R.id.recycleListView);
 
         people = appUtility.getPeople();
         catalogue=appUtility.getCatalogue();
@@ -70,13 +79,9 @@ public class MainActivity extends AppCompatActivity implements ListAdapterWithRe
     }
 
     private void initPersonInputForm(){
-        editTextFirstName = (EditText)findViewById(R.id.editTextFirstName);
-        editTextLastName = (EditText)findViewById(R.id.editTextLastName);
-        radioGroup = (RadioGroup)findViewById(R.id.radioGroupGender);
 
-        spinnerNationality = (Spinner)findViewById(R.id.spinnerNationality);
         spinnerNationality.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,appUtility.getUniqueNationalitiesArray()));
-        buttonAdd = (Button)findViewById(R.id.buttonAdd);
+
         buttonAdd.setTag("Add");
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
